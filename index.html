@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>real time chat app umer</title>
+  </head>
+  <body>
+    <h2>my chat app</h2>
+
+    <button onclick="connectsocket()">connect</button>
+
+    <button onclick="disconnectsocket()">disconnect</button>
+
+    <hr />
+
+    <input id="msg" type="text" placeholder="type your message" />
+
+    <button onclick="sendmessage()">send</button>
+
+    <hr />
+
+    <ul id="" messages></ul>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+      // do not connect automatic
+      const socket = io({
+        autoConnect: false,
+      });
+      // connect manual
+      function connectsocket() {
+        socket.connect();
+      }
+
+      function disconnectsocket() {
+        socket.disconnect();
+      }
+
+      function sendmessage() {
+        const input = document.getElementById("msg");
+        const text = input.value.trim();
+
+        if (!text) {
+          return;
+        } else {
+          socket.emit("message", text);
+        }
+
+        input.value = "";
+      }
+    </script>
+  </body>
+</html>
