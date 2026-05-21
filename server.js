@@ -2,23 +2,26 @@ import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 
-// -------------------------------------------------------------------------------------------------------------------------------------//
 const app = express();
 
-// serve html files
+// serve static files
 app.use(express.static("public"));
+
+// create http server
 const httpServer = createServer(app);
+
+// attach socket.io
 const io = new Server(httpServer, {
   cors: {
     origin: "*",
   },
 });
 
+// socket connection
 io.on("connection", (socket) => {
-  console.log(" ✅ user connected", socket.id);
+  console.log("✅ user connected", socket.id);
 
   socket.on("message", (msg) => {
-    // send to everyone (emit = event use)
     io.emit("message", msg);
   });
 
@@ -27,6 +30,7 @@ io.on("connection", (socket) => {
   });
 });
 
-app.listen(3000, () => {
+// IMPORTANT
+httpServer.listen(3000, () => {
   console.log("server running on port 3000 🔌");
 });
