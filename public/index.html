@@ -27,7 +27,6 @@
 
     <ul id="" messages></ul>
 
-
     <!-- functions -->
     <script src="/socket.io/socket.io.js"></script>
 
@@ -40,7 +39,7 @@
       function connectsocket() {
         socket.connect();
       }
-       // disconnect manual
+      // disconnect manual
       function disconnectsocket() {
         socket.disconnect();
       }
@@ -58,15 +57,38 @@
         input.value = "";
       }
 
-        // load old messages
+      // load old messages
 
-        socket.on("old-messages",(messages)=>{
-          messages.forEach((item)=>{
-            addMessage(item.text)
-          })
-        })
+      socket.on("old-messages", (messages) => {
+        messages.forEach((item) => {
+          addMessage(item.text);
+        });
+      });
 
+      // live messages   (on = create event)
+      socket.on("message", (msg) => {
+        addMessage(msg);
+      });
 
+      // connection established
+      socket.on("connect", () => {
+        console.log("client connect:", socket.id);
+      });
+
+      // disconnect
+      socket.on("disconnect", () => {
+        console.log("client disconnected:", socket.id);
+      });
+
+      // show message on screen
+
+      function addMessage(text) {
+        const li = document.createElement("li");
+
+        li.innerText = text;
+        // grab html ul (ul is an array)
+        document.getElementById("messages").appendChild(li);
+      }
     </script>
   </body>
 </html>
