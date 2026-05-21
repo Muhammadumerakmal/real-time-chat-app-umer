@@ -23,7 +23,7 @@
 
     <hr />
 
-    <!--  -->
+    <!--list  -->
 
     <ul id="" messages></ul>
 
@@ -57,6 +57,16 @@
 
         input.value = "";
       }
+
+        // load old messages
+
+        socket.on("old-messages",(messages)=>{
+          messages.forEach((item)=>{
+            addMessage(item.text)
+          })
+        })
+
+
     </script>
   </body>
 </html>
