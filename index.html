@@ -6,6 +6,7 @@
     <title>real time chat app umer</title>
   </head>
   <body>
+    <!-- top -->
     <h2>my chat app</h2>
 
     <button onclick="connectsocket()">connect</button>
@@ -14,14 +15,20 @@
 
     <hr />
 
+    <!-- input -->
+
     <input id="msg" type="text" placeholder="type your message" />
 
     <button onclick="sendmessage()">send</button>
 
     <hr />
 
+    <!--  -->
+
     <ul id="" messages></ul>
 
+
+    <!-- functions -->
     <script src="/socket.io/socket.io.js"></script>
 
     <script>
@@ -33,11 +40,11 @@
       function connectsocket() {
         socket.connect();
       }
-
+       // disconnect manual
       function disconnectsocket() {
         socket.disconnect();
       }
-
+      // send message
       function sendmessage() {
         const input = document.getElementById("msg");
         const text = input.value.trim();
